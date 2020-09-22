@@ -1,2 +1,7 @@
 # CS3560-01
-Assignments for CS3560.01 Fall 2020
+Assignments
+
+Class     : Object Oriented Design and Programming
+Instructor: Yu Sun
+Semester  : Fall 2020
+
