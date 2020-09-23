@@ -3,12 +3,15 @@
  * Date       : 21 September 2020
  * Class      : CS 3560
  * Assignment : Assignment 1
- * Description: Voting service. Accepts the question created by the user in the driver
- *              then accepts student answers. Can display results
  ****************************************************************************************/
 package CS3560_Assignment1;
 import java.util.ArrayList;
 
+/****************************************************************************************
+ * Voting Class
+ *    This class represents a VotingService object and manages 3 attributes: question,
+ *    acceptedAnswers, and ansStats.
+ ****************************************************************************************/
 public class VotingService{
 	
 	// INSTANCE VARIABLES
@@ -30,7 +33,8 @@ public class VotingService{
 	 ************************************************************************************/
 	public VotingService(Question question) // IN - contains info about poll question
 	{
-		this.question = question;
+		this.question = new Question(question.getQuestion(), question.getAnswerOptions(),
+			                         question.getIsMultiple());
 		this.acceptedAnswers = new ArrayList<PollStudent>();
 		this.ansStats = new int[question.getAnswerOptions().size()];
 	}
@@ -50,7 +54,8 @@ public class VotingService{
 	 ************************************************************************************/
 	public void setQuestion(Question question) // IN - a question
 	{
-		this.question = question;
+		this.question = new Question(question.getQuestion(), question.getAnswerOptions(),
+                                     question.getIsMultiple());
 	}
 	
 	
@@ -70,10 +75,11 @@ public class VotingService{
 		// Variables
 		int size = acceptedAnswers.size(); // PROC - # of answers submitted
 		int i = 0;                         // PROC - increment (counter)
+		PollStudent temp = new PollStudent(studentAns.getID(), studentAns.getAnswer());
 		
 		// PROC - while index(i) is < max index - 1 AND given student ID does not match
 		//        student ID at index i, loop through
-		while(i < size-1 && acceptedAnswers.get(i).getID() != studentAns.getID())
+		while(i < size-1 && !acceptedAnswers.get(i).getID().equals(temp.getID()))
 		{
 			i++;
 		}
@@ -81,14 +87,14 @@ public class VotingService{
 		
 		// If this is not 1st answer to be submitted AND given ID matches one previously
 		// used, change answer at that index
-		if(size != 0 && acceptedAnswers.get(i).getID() == studentAns.getID())
+		if(size != 0 && acceptedAnswers.get(i).getID().equals(temp.getID()))
 		{
-			acceptedAnswers.set(i, studentAns);
+			acceptedAnswers.set(i, temp);
 		}
 		// Else, add student and their answer to submitted answers
 		else
 		{
-			acceptedAnswers.add(studentAns);
+			acceptedAnswers.add(temp);
 		}
 	
 	}
@@ -105,12 +111,11 @@ public class VotingService{
 	private void calcAnsStats()
 	{
 		String[] answers; // Student's answer
-		
-		// For each student submission
-		for(PollStudent studentAns : acceptedAnswers)
+		// If question is multiple choice
+		if(question.getIsMultiple())
 		{
-			// If question is multiple choice
-			if(question.getIsMultiple())
+			// For each student submission
+			for(PollStudent studentAns : acceptedAnswers)
 			{
 				// Splits answer with "\n" as mult choice answer was submitted with \n
 				// separating each selection
@@ -129,10 +134,19 @@ public class VotingService{
 							ansStats[j]++;
 						}
 					} // end answer option loop
+					
+					
 				} // end selected/given answer loop
+				
+				
 			} // end of if mult statement
-			// Else -> single choice
-			else
+			
+			
+		}// Else -> single choice
+		else
+		{
+			// For each student submission
+			for(PollStudent studentAns : acceptedAnswers)
 			{
 				for(int j = 0; j < question.getAnswerOptions().size(); j++)
 				{
@@ -141,8 +155,12 @@ public class VotingService{
 						ansStats[j]++;
 					} // end if statement
 				} // end for loop
-			} // end ...else statement
-		} // end for loop (student submissions)
+				
+				
+			} // end for loop (studentAns)
+			
+			
+		} // end ...else statement
 	} // end function
 	
 	
@@ -155,11 +173,14 @@ public class VotingService{
 	 * ----------------------------------------------------------------------------------
 	 * Parameters: none
 	 * Returns   : 
-     *     question (Question)
+     *     temp (Question) - copy of question
 	 ************************************************************************************/
 	public Question getQuestion()
 	{
-		return this.question;
+		Question temp = new Question(this.question.getQuestion(), 
+				                     this.question.getAnswerOptions(), 
+				                     this.question.getIsMultiple());
+		return temp;
 	}
 	
 	
@@ -170,11 +191,20 @@ public class VotingService{
 	 * ----------------------------------------------------------------------------------
 	 * Parameters: none
 	 * Returns   : 
-	 *     acceptedAnswers (ArrayList<PollStudent>)
+	 *     temp (ArrayList<PollStudent>) - copy of answers
 	 ************************************************************************************/
 	public ArrayList<PollStudent> getAcceptedAnswers()
 	{
-		return this.acceptedAnswers;
+		ArrayList<PollStudent> temp = new ArrayList<PollStudent>();
+		
+		// Creates a copy to return
+		for(PollStudent studentAns : this.acceptedAnswers)
+		{
+			PollStudent student = new PollStudent(studentAns.getID(), studentAns.getAnswer());
+			temp.add(student);
+		}
+		
+		return temp;
 	}
 	
 	

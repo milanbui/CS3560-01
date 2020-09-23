@@ -3,11 +3,14 @@
  * Date       : 21 September 2020
  * Class      : CS 3560
  * Assignment : Assignment 1
- * Description: A candidate answer. Has the answer and whether or not it is the correct
- *              answer
  ****************************************************************************************/
 package CS3560_Assignment1;
 
+/****************************************************************************************
+ * Answer Class
+ *    This class represents an Answer object and it manages 2 attributes: answer and
+ *    isCorrect.
+ ****************************************************************************************/
 public class Answer 
 {
 	// INSTANCE VARIABLES

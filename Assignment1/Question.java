@@ -3,12 +3,15 @@
  * Date       : 21 September 2020
  * Class      : CS 3560
  * Assignment : Assignment 1
- * Description: A question with answer options, configured as either a multiple or single
- *              choice question. 
  ****************************************************************************************/
 package CS3560_Assignment1;
 import java.util.ArrayList;
 
+/****************************************************************************************
+ * Question Class
+ *    This class represents an Question object and it manages 3 attributes: question, 
+ *    answerOptions, and isMultiple.
+ ****************************************************************************************/
 public class Question{
 	
 	// Instance Variables
@@ -52,9 +55,11 @@ public class Question{
 		this.isMultiple = isMultiple;
 		this.answerOptions = new ArrayList<Answer>();
 		
+		// Makes a copy of each answerOption to fill the class answerOption variable
 		for(Answer option : answerOptions)
 		{
-			this.answerOptions.add(option);
+			Answer temp = new Answer(option.getAnswer(), option.getIsCorrect());
+			this.answerOptions.add(temp);
 		}
 	}
 	
@@ -88,9 +93,11 @@ public class Question{
 	 ************************************************************************************/
 	public void setAnswerOptions(ArrayList<Answer> answerOptions) // IN - answer options
 	{
+		// Makes a copy of each answerOption to fill the class answerOption variable
 		for(Answer option : answerOptions)
 		{
-			this.answerOptions.add(option);
+			Answer temp = new Answer(option.getAnswer(), option.getIsCorrect());
+			this.answerOptions.add(temp);
 		}
 	}
 	
@@ -109,6 +116,7 @@ public class Question{
 	public void addAnswerOptions(String answer,     // IN - answer option
 			                     boolean isCorrect) // IN - if it is a correct answer
 	{
+		// Creates a copy to add
 		Answer temp = new Answer(answer, isCorrect);
 		answerOptions.add(temp);
 	}
@@ -153,10 +161,18 @@ public class Question{
 	 * Parameters:
 	 *     none
 	 * Return:
-	 *     answerOptions (ArrayList<Answer) - answer options for poll question
+	 *     temp (ArrayList<Answer) - answer options for poll question
 	 ************************************************************************************/
 	public ArrayList<Answer> getAnswerOptions() {
-		return this.answerOptions;
+		ArrayList<Answer> temp = new ArrayList<Answer>();
+		
+		// Creates a copy of answerOption to return
+		for(Answer option : this.answerOptions)
+		{
+			Answer tempAns = new Answer(option.getAnswer(), option.getIsCorrect());
+			temp.add(tempAns);
+		}
+		return temp;
 	}
 	
 	/************************************************************************************

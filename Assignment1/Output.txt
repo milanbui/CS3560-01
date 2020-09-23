@@ -1,0 +1,17 @@
+Question: What languages am I learning?
+
+Korean  : 7     |  Correct Answer
+German  : 9     
+Chinese : 13    
+Japanese: 9     |  Correct Answer
+Spanish : 8     |  Correct Answer
+
+
+
+Question: Who was the 2018 Olympic gold medalist for men's figure skating?
+
+Javier Fernandez: 1     
+Shoma Uno       : 5     
+Nathan Chen     : 7     
+Yuzuru Hanyu    : 4     |  Correct Answer
+Boyang Jin      : 7     
